@@ -6,8 +6,7 @@ db = pymysql.connect(host='58.87.111.121', user='root', password='123456', datab
 
 def get_books(book_name):
     cursor = db.cursor()
-    sql = '''SELECT book_name,download_link,book_content FROM book WHERE book_name = '%s'
-    ''' % book_name
+    sql = 'SELECT book_name,download_link,book_content FROM book WHERE book_name LIKE \'%' + book_name + '%\''
     cursor.execute(sql)
     books = cursor.fetchall()
     result = []

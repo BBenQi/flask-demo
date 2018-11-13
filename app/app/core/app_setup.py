@@ -11,8 +11,16 @@ def hello():
      Python 3.7 (from the example template), '''
 
 
-@app.route("/getbook", methods=['POST'])
+@app.route("/getbook", methods=['GET'])
 def get_book():
-    book_name = request.form['book']
+    book_name = request.args.get('book', '')
     result = get_books(book_name)
     return json.dumps(result, ensure_ascii=False)
+
+
+@app.after_request
+def cors(environ):
+    environ.headers['Access-Control-Allow-Origin'] = '*'
+    environ.headers['Access-Control-Allow-Method'] = '*'
+    environ.headers['Access-Control-Allow-Headers'] = 'x-requested-with,content-type'
+    return environ
